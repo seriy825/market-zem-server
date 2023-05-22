@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\AuthRepositoryInterface;
-use App\Repositories\AuthRepository;
+use App\Repositories\Auth\AuthRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

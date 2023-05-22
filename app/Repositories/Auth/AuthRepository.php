@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Auth;
 
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
@@ -12,28 +12,26 @@ class AuthRepository implements AuthRepositoryInterface
 {
     public function register(RegisterRequest $registerRequest)
     {
-        $user = User::create($registerRequest);
+        $user = User::create([
+            'name'=>$registerRequest->name,
+            'email'=>$registerRequest->email,
+            'password'=>$registerRequest->password,
+            'password_confirmation'=>$registerRequest->password_confirmation,
+            'birthdate'=>$registerRequest->birthdate,
+        ]);
         $token = $user->createToken('auth_token')->plainTextToken;
         return $token;
     }
 
     public function login(LoginRequest $loginRequest)
     {
-        if (!Auth::attempt($loginRequest->only('email', 'password')) || $loginRequest['email']=='admin@groupbwt.com') {
-            return response()->json([
+        if (!Auth::attempt($loginRequest->only('email', 'password'))) {
+            return [
                 'message' => 'Invalid login details'
-            ], 302);
+            ];
         }
         $user = User::where('email', $loginRequest['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
-        return [
-            'user'=>$user,
-            'token'=>$token
-        ];
-    }
-
-    public function logout()
-    {
-        return Auth::user()->tokens->delete();
+        return $token;
     }
 }

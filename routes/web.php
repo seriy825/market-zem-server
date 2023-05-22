@@ -1,6 +1,6 @@
 <?php
 
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,3 +11,7 @@
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::controller(App\Http\Controllers\AuthController::class)->group(function () {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+});
