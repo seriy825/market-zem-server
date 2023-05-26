@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,3 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::controller(App\Http\Controllers\Api\CityController::class)->group(function () {
+    Route::get('/regions', 'regions');
+    Route::get('/distincts/{region}', 'distincts');
+    Route::get('/cities/{region}/{distinct}', 'cities');
+    Route::get('/cities/{cityId}', 'view');
+});
+Route::controller(App\Http\Controllers\Api\AssignmentController::class)->group(function () {
+    Route::get('/assignments', 'index');
+});
+Route::controller(App\Http\Controllers\Api\ListingController::class)->group(function () {
+    Route::get('/listings','index');
+    Route::post('/listings', 'create');
+    Route::get('/listings/{listingId}', 'view');
+    Route::post('/listings/{listingId}','update');
+});
