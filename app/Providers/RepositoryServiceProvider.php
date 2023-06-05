@@ -10,6 +10,8 @@ use App\Interfaces\AssignmentRepositoryInterface;
 use App\Repositories\Assignment\AssignmentRepository;
 use App\Interfaces\ListingRepositoryInterface;
 use App\Repositories\Listing\ListingRepository;
+use App\Interfaces\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CityRepositoryInterface::class, CityRepository::class);
         $this->app->bind(AssignmentRepositoryInterface::class, AssignmentRepository::class);
         $this->app->bind(ListingRepositoryInterface::class, ListingRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**

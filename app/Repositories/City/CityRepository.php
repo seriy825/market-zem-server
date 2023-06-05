@@ -14,11 +14,11 @@ class CityRepository implements CityRepositoryInterface
     }
     public function getDistincts($region)
     {
-        return City::query()->where('region',$region)->groupby('community')->havingRaw('COUNT(*)>=1')->pluck('community');;
+        return City::query()->where('region',$region)->groupby('community')->havingRaw('COUNT(*)>=1')->pluck('community');
     }
     public function getCities($region,$distinct)
     {
-        return City::query()->select('id','name')->where('region',$region)->where('community',$distinct)->groupby('id','name')->havingRaw('COUNT(*)>=1')->get();
+        return City::query()->select('name','id')->where('region',$region)->where('community',$distinct)->groupby('name','id')->havingRaw('COUNT(*)>=1')->get();
     }
     public function getCity($cityId)
     {

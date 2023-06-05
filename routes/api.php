@@ -27,4 +27,10 @@ Route::controller(App\Http\Controllers\Api\ListingController::class)->group(func
     Route::post('/listings', 'create');
     Route::get('/listings/{listingId}', 'view');
     Route::post('/listings/{listingId}','update');
+    Route::delete('/listings/{listingId}','delete');
+});
+Route::controller(App\Http\Controllers\Api\UserController::class)->group(function () {
+    Route::get('/user/{token}', 'user');
+    Route::post('/user/{id}', 'update');
+    Route::get('/user/listings/{id}','getListingsByUser');
 });

@@ -10,4 +10,5 @@ interface ListingRepositoryInterface
     public function getListing($id);
     public function create(CreateListingRequest $listingDetails);
     public function update($id);
+    public function delete($id);
 }

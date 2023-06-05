@@ -31,4 +31,7 @@ class ListingController extends Controller
     public function update($listingId){
         return response()->json($this->listingRepository->update($listingId),200);
     }
+    public function delete($listingId){
+        return response()->json($this->listingRepository->delete($listingId),200);
+    }
 }

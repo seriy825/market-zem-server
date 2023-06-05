@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Listing;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class CreateListingRequest extends FormRequest
 {
@@ -23,14 +25,19 @@ class CreateListingRequest extends FormRequest
     {
         return [
             'description'=>['string','max:255','nullable'],
-            'cadastral_number'=>['string','max:22'],
-            'rental_status'=>['nullable','date'],
-            'square'=>['numeric'],
-            'rental_price'=>['nullable','numeric'],
+            'cadastral_number'=>['required','string','max:22'],
+            'rental_status'=>['nullable',],
+            'square'=>['required','numeric'],
+            'rental_price'=>['nullable'],
             'price'=>['nullable','numeric'],
             'token'=>['string','required'],
             'city_id'=>['exists:cities,id','required'],
             'assignment_id'=>['exists:assignments,id','required'],
+            'images'=>['required'],
+            'images.*'=>['image','max:5000','mimes:png,jpg,bmp,jpeg']
         ];
+    }
+    public function failedValidation(Validator $validator) {
+        throw new HttpResponseException(response()->json($validator->errors(), 302));
     }
 }
