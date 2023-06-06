@@ -30,6 +30,10 @@ class Listing extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class);
+    }
     public function city()
     {
         return $this->belongsTo(City::class);
