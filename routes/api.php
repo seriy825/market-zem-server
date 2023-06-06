@@ -33,4 +33,7 @@ Route::controller(App\Http\Controllers\Api\UserController::class)->group(functio
     Route::get('/user/{token}', 'user');
     Route::post('/user/{id}', 'update');
     Route::get('/user/listings/{id}','getListingsByUser');
+    Route::get('/user/favorites/{id}','getFavoritedListings');
+    Route::post('/listings/{listingsId}/add','addToFavorites');
+    Route::delete('/listings/{listingsId}/remove','removeFromFavorites');
 });

@@ -23,7 +23,11 @@ class AuthRepository implements AuthRepositoryInterface
             'phone'=>$registerRequest->phone,
         ]);
         $token = $user->createToken('auth_token')->plainTextToken;
-        return $token;
+        return [
+            'token'=>$token,
+            'status'=>200,
+            'user'=>$user,
+        ];
     }
 
     public function login(LoginRequest $loginRequest)
@@ -41,6 +45,7 @@ class AuthRepository implements AuthRepositoryInterface
         return [
             'token'=>$token,
             'role'=>$role,
+            'user'=>$user,
             'status'=>200
         ];
     }
