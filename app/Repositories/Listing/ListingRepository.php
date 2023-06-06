@@ -6,6 +6,7 @@ use App\Http\Requests\Listing\CreateListingRequest;
 use App\Interfaces\ListingRepositoryInterface;
 use App\Models\Image;
 use App\Models\Listing;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Http\Request;
@@ -24,7 +25,6 @@ class ListingRepository implements ListingRepositoryInterface
                 }
             }
         }
-        $query=$query->orderBy('created_at','desc');
         if ($request->filled('approved')){
             $query=$query->approvedFilter($request->approved);
         }
@@ -47,13 +47,12 @@ class ListingRepository implements ListingRepositoryInterface
             $query=$query->orderBy('rental_price',$request->priceSort);
         }
         if ($request->filled('limit')){
-            return $query->with('user','city','assignment','images')->paginate($request->limit);
+            return $query->with('user','city','assignment','images','favorites')->paginate($request->limit);
         }
-        return $query->with('user','city','assignment','images')->paginate(15);
+        return $query->with('user','city','assignment','images','favorites')->paginate(15);
     }
     public function getListing($listingId){
-
-        return Listing::query()->with('user','city','assignment','images')->where('id',$listingId)->first();
+        return Listing::query()->with('user','city','assignment','images','favorites')->where('id',$listingId)->first();
     }
     public function create(CreateListingRequest $listingDetails){
         $user = PersonalAccessToken::findToken($listingDetails->token)->tokenable()->first();
@@ -74,6 +73,7 @@ class ListingRepository implements ListingRepositoryInterface
     }
     public function delete($listingId){
         $listing = Listing::findOrFail($listingId);
+        DB::table('listing_user')->where('listing_id',$listingId)->delete();
         $listing->images()->delete();
         return Listing::destroy($listingId);
     }
