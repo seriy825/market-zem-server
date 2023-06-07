@@ -25,6 +25,7 @@ class AuthRepository implements AuthRepositoryInterface
         $token = $user->createToken('auth_token')->plainTextToken;
         return [
             'token'=>$token,
+            'status'=>200,
             'user'=>$user,
         ];
     }
