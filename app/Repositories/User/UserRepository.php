@@ -29,7 +29,10 @@ class UserRepository implements UserRepositoryInterface
     public function updateUser($id,UserUpdateRequest $userUpdateRequest){
         $user = User::findOrFail($id);
         $user->update($userUpdateRequest->all());
-        return $user;
+        return [
+            'user'=>$user,
+            'status'=>200
+        ];
     }
     public function getListingsByUser($id){
         $user = User::findOrFail($id);
