@@ -43,9 +43,6 @@ class ListingRepository implements ListingRepositoryInterface
         if ($request->filled('createSort')){
             $query=$query->orderBy('created_at',$request->createSort);
         }
-        else{
-            $query=$query->orderBy('created_at','desc');
-        }
         if ($request->filled('priceSort')){
             $query=$query->orderBy('rental_price',$request->priceSort);
         }
